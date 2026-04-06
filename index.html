@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AVT Business Evaluation — ROWC Calculator</title>
+<style>
+  :root {
+    --blue:    #1a4f8a;
+    --blue-lt: #2563ab;
+    --green:   #16a34a;
+    --red:     #dc2626;
+    --amber:   #d97706;
+    --gray-50: #f8fafc;
+    --gray-100:#f1f5f9;
+    --gray-200:#e2e8f0;
+    --gray-400:#94a3b8;
+    --gray-600:#475569;
+    --gray-800:#1e293b;
+    --white:   #ffffff;
+    --shadow:  0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.08);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,.12);
+    --radius:  8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-800);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--blue);
+    color: var(--white);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-lg);
+  }
+  header .logo {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    background: var(--white);
+    color: var(--blue);
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+  header .title-block h1 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  header .title-block p {
+    font-size: 12px;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+  header .hurdle {
+    margin-left: auto;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: var(--radius);
+    padding: 8px 16px;
+    text-align: center;
+  }
+  header .hurdle span { font-size: 11px; opacity: 0.8; display: block; }
+  header .hurdle strong { font-size: 22px; font-weight: 800; }
+
+  /* ── Layout ── */
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px 20px 60px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  @media (max-width: 720px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    background: var(--blue);
+    color: var(--white);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .3px;
+  }
+  .card-header .badge {
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 1px 8px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .card-body { padding: 16px; }
+
+  /* ── Form Controls ── */
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 4px;
+  }
+  label .req { color: var(--red); }
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .input-wrap .prefix, .input-wrap .suffix {
+    position: absolute;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-400);
+    pointer-events: none;
+    user-select: none;
+  }
+  .input-wrap .prefix { left: 10px; }
+  .input-wrap .suffix { right: 10px; }
+  input[type="number"] {
+    width: 100%;
+    padding: 8px 32px 8px 10px;
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--gray-800);
+    background: var(--gray-50);
+    transition: border-color .15s, box-shadow .15s;
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+  input[type="number"]:focus {
+    outline: none;
+    border-color: var(--blue-lt);
+    box-shadow: 0 0 0 3px rgba(37,99,171,.12);
+    background: var(--white);
+  }
+  .has-prefix input { padding-left: 28px; }
+  .has-suffix input { padding-right: 36px; }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  /* ── Divider ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--gray-200);
+    margin: 14px 0;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    color: var(--gray-400);
+    margin-bottom: 10px;
+  }
+
+  /* ── Action Bar ── */
+  .action-bar {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+    justify-content: center;
+  }
+  button {
+    padding: 10px 28px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--blue);
+    color: var(--white);
+    box-shadow: var(--shadow);
+  }
+  .btn-primary:hover { background: var(--blue-lt); }
+  .btn-secondary {
+    background: var(--gray-200);
+    color: var(--gray-600);
+  }
+  .btn-secondary:hover { background: var(--gray-100); }
+
+  /* ── Results ── */
+  .results-section { display: none; }
+  .results-section.visible { display: block; }
+
+  .rowc-hero {
+    background: linear-gradient(135deg, var(--blue) 0%, #1e3a5f 100%);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+    box-shadow: var(--shadow-lg);
+  }
+  .rowc-hero .label { font-size: 13px; opacity: 0.75; margin-bottom: 4px; }
+  .rowc-hero .value { font-size: 48px; font-weight: 900; line-height: 1; }
+  .rowc-hero .sub { font-size: 13px; opacity: 0.7; margin-top: 6px; }
+  .verdict {
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+    min-width: 160px;
+  }
+  .verdict.pass { background: var(--green); }
+  .verdict.fail { background: var(--red); }
+  .verdict span { display: block; font-size: 11px; font-weight: 500; opacity: 0.85; margin-top: 3px; }
+
+  /* ── Result Tables ── */
+  .result-table { width: 100%; border-collapse: collapse; }
+  .result-table tr { border-bottom: 1px solid var(--gray-100); }
+  .result-table tr:last-child { border-bottom: none; }
+  .result-table td {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  .result-table td:first-child { color: var(--gray-600); }
+  .result-table td:last-child {
+    text-align: right;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-family: "SF Mono", "Fira Mono", monospace;
+    font-size: 13px;
+  }
+  .result-table .subtotal td {
+    background: var(--gray-50);
+    font-weight: 700;
+    color: var(--gray-800);
+    border-top: 2px solid var(--gray-200);
+  }
+  .result-table .total td {
+    background: var(--blue);
+    color: var(--white);
+    font-weight: 800;
+    border-radius: 0;
+  }
+  .result-table .indent td:first-child { padding-left: 22px; color: var(--gray-400); font-size: 12px; }
+  .result-table .positive td:last-child { color: var(--green); }
+  .result-table .negative td:last-child { color: var(--red); }
+  .result-table .highlight td {
+    background: #eff6ff;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  /* waterfall bar */
+  .waterfall-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--gray-200);
+    margin-top: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  .waterfall-bar .fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .waterfall-bar .fill.green { background: var(--green); }
+  .waterfall-bar .fill.red { background: var(--red); }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    color: var(--gray-400);
+    font-size: 11px;
+    margin-top: 40px;
+    padding-bottom: 20px;
+  }
+
+  /* ── Print ── */
+  @media print {
+    header .hurdle { border-color: #ccc; }
+    .action-bar { display: none; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">AVT</div>
+  <div class="title-block">
+    <h1>Business Evaluation</h1>
+    <p>Return on Working Capital (ROWC) Calculator</p>
+  </div>
+  <div class="hurdle">
+    <span>Hurdle Rate</span>
+    <strong>12%</strong>
+    <span>ROWC Minimum</span>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- ── INPUT SECTIONS ── -->
+  <div class="grid-2" style="margin-bottom:20px;">
+
+    <!-- Revenue -->
+    <div class="card">
+      <div class="card-header">
+        <span>&#9654;</span> Revenue
+        <span class="badge">Section 1</span>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label>Net Sales (Annual) <span class="req">*</span></label>
+          <div class="input-wrap has-prefix has-suffix">
+            <span class="prefix">$</span>
+            <input type="number" id="netSales" placeholder="0" min="0" step="any" />
+            <span class="suffix">K</span>
+          </div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">Enter value in thousands (K). Net Sales = Resale = POS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GP -->
+    <div class="card">
+      <div class="card-header">
+        <span>&#9654;</span> Gross Profit
+        <span class="badge">Section 2</span>
+      </div>
+      <div class="card-body">
+        <p class="section-label">Material Gross Profit</p>
+        <div class="field">
+          <label>MGP% (Material Gross Profit %) <span class="req">*</span></label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="mgpPct" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="suffix">%</span>
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <p class="section-label">GP Adjustments (deducted from MGP)</p>
+
+        <div class="field">
+          <label>Freight-In <span class="req">*</span></label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="freightIn" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="suffix">%</span>
+          </div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales</div>
+        </div>
+
+        <div class="field">
+          <label>Customer Rebate <span class="req">*</span></label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="customerRebate" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="suffix">%</span>
+          </div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales</div>
+        </div>
+
+        <div class="field">
+          <label>Other GP Adjustments <span class="req">*</span></label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="otherGPAdj" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="suffix">%</span>
+          </div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales — IR, Profit-Sharing, Supplier Rebate, Import Duty, etc.</div>
+        </div>
+
+        <div class="field">
+          <label>Others</label>
+          <div class="input-wrap has-suffix">
+            <input type="number" id="othersGPAdj" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="suffix">%</span>
+          </div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales — any additional GP deductions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPEX Card (full width) -->
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-header">
+      <span>&#9654;</span> Operating Expenses (OPEX)
+      <span class="badge">Section 3</span>
+    </div>
+    <div class="card-body">
+      <div class="grid-3">
+
+        <!-- Direct Staff -->
+        <div>
+          <p class="section-label">Direct Staff</p>
+          <div class="field">
+            <label>Front-end Headcount <span class="req">*</span></label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="feHeadcount" placeholder="0" min="0" step="1" />
+              <span class="suffix">pax</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Front-end Cost Rate <span class="req">*</span></label>
+            <div class="input-wrap has-prefix has-suffix">
+              <span class="prefix">$</span>
+              <input type="number" id="feRate" placeholder="0" min="0" step="any" />
+              <span class="suffix">K/head</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Supporting Headcount <span class="req">*</span></label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="suppHeadcount" placeholder="0" min="0" step="1" />
+              <span class="suffix">pax</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Supporting Cost Rate <span class="req">*</span></label>
+            <div class="input-wrap has-prefix has-suffix">
+              <span class="prefix">$</span>
+              <input type="number" id="suppRate" placeholder="0" min="0" step="any" />
+              <span class="suffix">K/head</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Freight-Out & Others -->
+        <div>
+          <p class="section-label">Freight-Out</p>
+          <div class="field">
+            <label>Freight-Out % <span class="req">*</span></label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="freightOutPct" placeholder="0.00" min="0" max="100" step="any" />
+              <span class="suffix">%</span>
+            </div>
+            <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales</div>
+          </div>
+          <p class="section-label" style="margin-top:14px;">Others</p>
+          <div class="field">
+            <label>Others OPEX %</label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="othersOPEXPct" placeholder="0.00" min="0" max="100" step="any" />
+              <span class="suffix">%</span>
+            </div>
+            <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales — any additional operating expenses</div>
+          </div>
+        </div>
+
+        <!-- Working Capital Cost -->
+        <div>
+          <p class="section-label">Working Capital Cost</p>
+          <div class="field">
+            <label>DSO — Customer Payment Term <span class="req">*</span></label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="dso" placeholder="0" min="0" step="1" />
+              <span class="suffix">days</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>DIO — Inventory Buffer Period <span class="req">*</span></label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="dio" placeholder="0" min="0" step="1" />
+              <span class="suffix">days</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>DPO — Payment Term to Supplier <span class="req">*</span></label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="dpo" placeholder="0" min="0" step="1" />
+              <span class="suffix">days</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Cost of Fund (p.a.) <span class="req">*</span></label>
+            <div class="input-wrap has-suffix">
+              <input type="number" id="costOfFund" placeholder="0.00" min="0" max="100" step="any" />
+              <span class="suffix">%</span>
+            </div>
+            <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">Reference: current borrowing interest rate</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Bar -->
+  <div class="action-bar">
+    <button class="btn-secondary" onclick="clearAll()">&#8635; Clear All</button>
+    <button class="btn-primary" onclick="calculate()">&#9654; Calculate ROWC</button>
+  </div>
+
+  <!-- ── RESULTS ── -->
+  <div class="results-section" id="results">
+
+    <!-- ROWC Hero -->
+    <div class="rowc-hero" id="rowcHero">
+      <div>
+        <div class="label">Return on Working Capital (ROWC)</div>
+        <div class="value" id="rowcValue">—</div>
+        <div class="sub" id="rowcSub">—</div>
+        <div class="waterfall-bar"><div class="fill" id="rowcBar" style="width:0%"></div></div>
+      </div>
+      <div class="verdict" id="rowcVerdict">
+        —
+        <span id="verdictSub">vs 12% hurdle</span>
+      </div>
+    </div>
+
+    <div class="grid-2">
+
+      <!-- GP Waterfall -->
+      <div class="card">
+        <div class="card-header">&#9654; GP Waterfall ($K)</div>
+        <div class="card-body">
+          <table class="result-table">
+            <tbody>
+              <tr><td>Net Sales</td><td id="r_netSales">—</td></tr>
+              <tr><td>MGP% Applied</td><td id="r_mgpPct">—</td></tr>
+              <tr class="subtotal"><td>MGP</td><td id="r_mgp">—</td></tr>
+              <tr class="indent"><td>(-) Freight-In</td><td id="r_freightIn">—</td></tr>
+              <tr class="indent"><td>(-) Customer Rebate</td><td id="r_customerRebate">—</td></tr>
+              <tr class="indent"><td>(-) Other GP Adj.</td><td id="r_otherGPAdj">—</td></tr>
+              <tr class="indent"><td>(-) Others</td><td id="r_othersGPAdj">—</td></tr>
+              <tr class="subtotal"><td>NGP</td><td id="r_ngp">—</td></tr>
+              <tr><td>NGP%</td><td id="r_ngpPct">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- OPEX Breakdown -->
+      <div class="card">
+        <div class="card-header">&#9654; OPEX Breakdown ($K)</div>
+        <div class="card-body">
+          <table class="result-table">
+            <tbody>
+              <tr class="indent"><td>Front-end Staff (HC × Rate)</td><td id="r_feCost">—</td></tr>
+              <tr class="indent"><td>Supporting Staff (HC × Rate)</td><td id="r_suppCost">—</td></tr>
+              <tr class="subtotal"><td>Direct Staff Total</td><td id="r_staffTotal">—</td></tr>
+              <tr class="indent"><td>Freight-Out</td><td id="r_freightOut">—</td></tr>
+              <tr class="indent"><td>Others</td><td id="r_othersOPEX">—</td></tr>
+              <tr class="indent"><td>Working Capital Cost</td><td id="r_wcCost">—</td></tr>
+              <tr><td>Avg. WC Days (DSO+DIO−DPO)</td><td id="r_avgWCDays">—</td></tr>
+              <tr><td>WC Cost%</td><td id="r_wcCostPct">—</td></tr>
+              <tr class="subtotal"><td>Total OPEX</td><td id="r_totalOPEX">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Contribution Margin -->
+      <div class="card">
+        <div class="card-header">&#9654; Contribution Margin ($K)</div>
+        <div class="card-body">
+          <table class="result-table">
+            <tbody>
+              <tr><td>NGP</td><td id="r_ngp2">—</td></tr>
+              <tr><td>(-) Total OPEX</td><td id="r_totalOPEX2">—</td></tr>
+              <tr class="highlight"><td>CM (Contribution Margin)</td><td id="r_cm">—</td></tr>
+              <tr><td>CM%</td><td id="r_cmPct">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Working Capital -->
+      <div class="card">
+        <div class="card-header">&#9654; Working Capital ($K)</div>
+        <div class="card-body">
+          <table class="result-table">
+            <tbody>
+              <tr><td>AR (Net Sales × DSO / 365)</td><td id="r_ar">—</td></tr>
+              <tr><td>INV (Net Sales × DIO / 365)</td><td id="r_inv">—</td></tr>
+              <tr><td>(-) AP (Net Sales × DPO / 365)</td><td id="r_ap">—</td></tr>
+              <tr class="subtotal"><td>Working Capital (AR+INV−AP)</td><td id="r_wc">—</td></tr>
+              <tr><td>WC Turns</td><td id="r_wcTurns">—</td></tr>
+              <tr class="total"><td>ROWC = CM ÷ WC</td><td id="r_rowc">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  AVT Business Evaluation Tool &nbsp;|&nbsp; ROWC Hurdle Rate: 12% &nbsp;|&nbsp; All monetary values in $K
+</footer>
+
+<script>
+  function val(id) {
+    const v = parseFloat(document.getElementById(id).value);
+    return isNaN(v) ? 0 : v;
+  }
+
+  function fmt(n, decimals = 1) {
+    // Format as $K with commas
+    return n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  }
+
+  function pct(n, decimals = 2) {
+    return n.toFixed(decimals) + '%';
+  }
+
+  function set(id, text, cls) {
+    const el = document.getElementById(id);
+    el.textContent = text;
+    if (cls) el.className = cls;
+  }
+
+  function calculate() {
+    // ── Inputs ──
+    const netSales           = val('netSales');
+    const mgpPct             = val('mgpPct') / 100;
+    const freightInPct       = val('freightIn') / 100;
+    const customerRebatePct  = val('customerRebate') / 100;
+    const otherGPAdjPct      = val('otherGPAdj') / 100;
+    const othersGPAdjPct     = val('othersGPAdj') / 100;
+    const feHC           = val('feHeadcount');
+    const feRate         = val('feRate');
+    const suppHC         = val('suppHeadcount');
+    const suppRate       = val('suppRate');
+    const freightOutPct  = val('freightOutPct') / 100;
+    const othersOPEXPct  = val('othersOPEXPct') / 100;
+    const dso            = val('dso');
+    const dio            = val('dio');
+    const dpo            = val('dpo');
+    const costOfFund     = val('costOfFund') / 100;
+
+    if (netSales === 0) {
+      alert('Please enter Net Sales to proceed.');
+      return;
+    }
+
+    // ── GP Waterfall ──
+    const mgp          = netSales * mgpPct;
+    const freightIn    = netSales * freightInPct;
+    const customerRebate = netSales * customerRebatePct;
+    const otherGPAdj   = netSales * otherGPAdjPct;
+    const othersGPAdj  = netSales * othersGPAdjPct;
+    const ngp    = mgp - freightIn - customerRebate - otherGPAdj - othersGPAdj;
+    const ngpPct = netSales > 0 ? ngp / netSales : 0;
+
+    // ── OPEX ──
+    const feCost     = feHC * feRate;
+    const suppCost   = suppHC * suppRate;
+    const staffTotal = feCost + suppCost;
+    const freightOut = netSales * freightOutPct;
+    const othersOPEX = netSales * othersOPEXPct;
+    const avgWCDays  = dso + dio - dpo;
+    const wcCostPct  = avgWCDays / 365 * costOfFund;
+    const wcCost     = netSales * wcCostPct;
+    const totalOPEX  = staffTotal + freightOut + othersOPEX + wcCost;
+
+    // ── CM ──
+    const cm    = ngp - totalOPEX;
+    const cmPct = netSales > 0 ? cm / netSales : 0;
+
+    // ── Working Capital ──
+    const ar      = netSales * dso / 365;
+    const inv     = netSales * dio / 365;
+    const ap      = netSales * dpo / 365;
+    const wc      = ar + inv - ap;
+    const wcTurns = wc > 0 ? netSales / wc : 0;
+    const rowc    = wc > 0 ? cm / wc : 0;
+
+    // ── Populate Results ──
+    set('r_netSales', fmt(netSales));
+    set('r_mgpPct', pct(mgpPct * 100));
+    set('r_mgp', fmt(mgp));
+    set('r_freightIn', '(' + fmt(freightIn) + ')  ' + pct(freightInPct * 100));
+    set('r_customerRebate', '(' + fmt(customerRebate) + ')  ' + pct(customerRebatePct * 100));
+    set('r_otherGPAdj', '(' + fmt(otherGPAdj) + ')  ' + pct(otherGPAdjPct * 100));
+    set('r_othersGPAdj', '(' + fmt(othersGPAdj) + ')  ' + pct(othersGPAdjPct * 100));
+    set('r_ngp', fmt(ngp));
+    set('r_ngpPct', pct(ngpPct * 100));
+
+    set('r_feCost', fmt(feCost));
+    set('r_suppCost', fmt(suppCost));
+    set('r_staffTotal', fmt(staffTotal));
+    set('r_freightOut', fmt(freightOut));
+    set('r_othersOPEX', fmt(othersOPEX) + '  ' + pct(othersOPEXPct * 100));
+    set('r_wcCost', fmt(wcCost));
+    set('r_avgWCDays', avgWCDays.toFixed(0) + ' days');
+    set('r_wcCostPct', pct(wcCostPct * 100));
+    set('r_totalOPEX', fmt(totalOPEX));
+
+    set('r_ngp2', fmt(ngp));
+    set('r_totalOPEX2', '(' + fmt(totalOPEX) + ')');
+    set('r_cm', fmt(cm));
+    set('r_cmPct', pct(cmPct * 100));
+
+    set('r_ar', fmt(ar));
+    set('r_inv', fmt(inv));
+    set('r_ap', fmt(ap));
+    set('r_wc', fmt(wc));
+    set('r_wcTurns', wcTurns.toFixed(2) + 'x');
+    set('r_rowc', pct(rowc * 100));
+
+    // ── ROWC Hero ──
+    const rowcPct = rowc * 100;
+    const pass    = rowcPct >= 12;
+
+    document.getElementById('rowcValue').textContent = pct(rowcPct, 1);
+    document.getElementById('rowcSub').textContent =
+      'CM: $' + fmt(cm) + 'K  |  WC: $' + fmt(wc) + 'K  |  WC Turns: ' + wcTurns.toFixed(2) + 'x';
+
+    const bar = document.getElementById('rowcBar');
+    const barWidth = Math.min(Math.max(rowcPct / 30 * 100, 0), 100);
+    bar.style.width = barWidth + '%';
+    bar.className = 'fill ' + (pass ? 'green' : 'red');
+
+    const verdict = document.getElementById('rowcVerdict');
+    verdict.textContent = pass ? '✓ PASS' : '✗ FAIL';
+    verdict.className = 'verdict ' + (pass ? 'pass' : 'fail');
+
+    const verdictSub = document.createElement('span');
+    verdictSub.textContent = pass
+      ? '+' + (rowcPct - 12).toFixed(1) + '% above hurdle'
+      : (rowcPct - 12).toFixed(1) + '% below hurdle';
+    verdict.appendChild(verdictSub);
+
+    // Show results
+    const resultsEl = document.getElementById('results');
+    resultsEl.classList.add('visible');
+    setTimeout(() => {
+      resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  function clearAll() {
+    document.querySelectorAll('input[type="number"]').forEach(el => el.value = '');
+    document.getElementById('results').classList.remove('visible');
+  }
+
+  // Allow Enter key to trigger calculation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') calculate();
+  });
+</script>
+
+</body>
+</html>
