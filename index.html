@@ -22,9 +22,7 @@
     --shadow-lg: 0 4px 16px rgba(0,0,0,.12);
     --radius:  8px;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: var(--gray-100);
@@ -44,261 +42,238 @@
     box-shadow: var(--shadow-lg);
   }
   header .logo {
-    font-size: 24px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    background: var(--white);
-    color: var(--blue);
-    padding: 4px 12px;
-    border-radius: 4px;
+    font-size: 24px; font-weight: 800; letter-spacing: 2px;
+    background: var(--white); color: var(--blue);
+    padding: 4px 12px; border-radius: 4px;
   }
-  header .title-block h1 {
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-  header .title-block p {
-    font-size: 12px;
-    opacity: 0.75;
-    margin-top: 2px;
-  }
+  header .title-block h1 { font-size: 18px; font-weight: 700; line-height: 1.2; }
+  header .title-block p  { font-size: 12px; opacity: 0.75; margin-top: 2px; }
   header .hurdle {
     margin-left: auto;
     background: rgba(255,255,255,0.15);
     border: 1px solid rgba(255,255,255,0.3);
     border-radius: var(--radius);
-    padding: 8px 16px;
-    text-align: center;
+    padding: 8px 16px; text-align: center;
   }
-  header .hurdle span { font-size: 11px; opacity: 0.8; display: block; }
+  header .hurdle span   { font-size: 11px; opacity: 0.8; display: block; }
   header .hurdle strong { font-size: 22px; font-weight: 800; }
 
-  /* ── Layout ── */
-  .page { max-width: 1100px; margin: 0 auto; padding: 24px 20px 60px; }
+  /* ── Page ── */
+  .page { max-width: 860px; margin: 0 auto; padding: 24px 20px 60px; }
 
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-  @media (max-width: 720px) {
-    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  /* ── Intro Banner ── */
+  .intro-banner {
+    background: var(--white);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--blue);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .intro-banner h2 { font-size: 15px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+  .intro-banner p  { font-size: 13px; color: var(--gray-600); margin-bottom: 10px; }
+  .legend { display: flex; gap: 10px; flex-wrap: wrap; }
+  .legend-item {
+    font-size: 12px; font-weight: 600;
+    padding: 3px 12px; border-radius: 20px;
+  }
+  .legend-item.na  { background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200); }
+  .legend-item.std { background: #fef3c7; color: var(--amber);            border: 1px solid #fde68a; }
+  .legend-item.man { background: #eff6ff;  color: var(--blue-lt);          border: 1px solid #bfdbfe; }
+
+  /* ── Section ── */
+  .q-section { margin-bottom: 20px; }
+  .q-section-title {
+    font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px;
+    color: var(--blue);
+    padding: 7px 14px; background: #eff6ff;
+    border-radius: var(--radius); margin-bottom: 10px;
+    border-left: 3px solid var(--blue);
   }
 
-  /* ── Cards ── */
-  .card {
+  /* ── Question Card ── */
+  .q-card {
     background: var(--white);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    display: flex;
+    margin-bottom: 8px;
     overflow: hidden;
+    transition: box-shadow .15s;
   }
-  .card-header {
+  .q-card:hover { box-shadow: var(--shadow-lg); }
+  .q-num {
     background: var(--blue);
     color: var(--white);
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: .3px;
+    font-size: 11px; font-weight: 800; letter-spacing: .4px;
+    padding: 16px 10px 0;
+    min-width: 46px; text-align: center;
+    flex-shrink: 0;
   }
-  .card-header .badge {
-    background: rgba(255,255,255,0.2);
-    border-radius: 20px;
-    padding: 1px 8px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-  .card-body { padding: 16px; }
+  .q-card.req-card .q-num { background: #1e3a5f; }
+  .q-body { padding: 14px 16px; flex: 1; }
+  .q-title { font-size: 14px; font-weight: 600; color: var(--gray-800); margin-bottom: 2px; }
+  .q-desc  { font-size: 12px; color: var(--gray-400); margin-bottom: 10px; line-height: 1.5; }
 
-  /* ── Form Controls ── */
-  .field { margin-bottom: 14px; }
-  .field:last-child { margin-bottom: 0; }
-  label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--gray-600);
-    margin-bottom: 4px;
-  }
-  label .req { color: var(--red); }
-  .input-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  .input-wrap .prefix, .input-wrap .suffix {
-    position: absolute;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--gray-400);
-    pointer-events: none;
-    user-select: none;
-  }
-  .input-wrap .prefix { left: 10px; }
-  .input-wrap .suffix { right: 10px; }
-  input[type="number"] {
-    width: 100%;
-    padding: 8px 32px 8px 10px;
-    border: 1px solid var(--gray-200);
-    border-radius: 6px;
-    font-size: 14px;
-    color: var(--gray-800);
+  /* ── Pill Group ── */
+  .pill-group { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 10px; }
+  .pill-label { cursor: pointer; }
+  .pill-label input[type="radio"] { display: none; }
+  .pill-btn {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--gray-200);
+    font-size: 12px; font-weight: 600;
+    color: var(--gray-500);
     background: var(--gray-50);
-    transition: border-color .15s, box-shadow .15s;
+    transition: all .15s;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .pill-label:hover .pill-btn { border-color: var(--gray-400); background: var(--gray-100); }
+  .pill-label.pill-na  input:checked + .pill-btn { background: var(--gray-600); border-color: var(--gray-600); color: #fff; }
+  .pill-label.pill-std input:checked + .pill-btn { background: var(--amber);    border-color: var(--amber);    color: #fff; }
+  .pill-label.pill-man input:checked + .pill-btn { background: var(--blue);     border-color: var(--blue);     color: #fff; }
+
+  /* ── Answer Areas ── */
+  .q-answer { display: none; border-radius: 6px; padding: 10px 14px; font-size: 13px; margin-top: 2px; }
+  .q-answer.show { display: block; }
+  .ans-na  { background: var(--gray-100); color: var(--gray-400); font-style: italic; }
+  .ans-std { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; font-weight: 600; }
+  .ans-man { background: #eff6ff; border: 1px solid #bfdbfe; }
+
+  /* Input row inside answer area */
+  .ans-row {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .ans-row + .ans-derived { margin-top: 6px; }
+  .ans-unit   { font-size: 12px; font-weight: 600; color: var(--gray-600); }
+  .ans-derived { font-size: 12px; color: var(--blue-lt); font-weight: 600; }
+  .ans-row input[type="number"] {
+    width: 130px; padding: 7px 10px;
+    border: 1.5px solid #bfdbfe; border-radius: 6px;
+    font-size: 14px; font-weight: 700; color: var(--blue);
+    background: var(--white);
     -moz-appearance: textfield;
   }
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
-  input[type="number"]:focus {
-    outline: none;
-    border-color: var(--blue-lt);
-    box-shadow: 0 0 0 3px rgba(37,99,171,.12);
-    background: var(--white);
+  .ans-row input[type="number"]::-webkit-inner-spin-button,
+  .ans-row input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .ans-row input[type="number"]:focus {
+    outline: none; border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(37,99,171,.15); background: white;
   }
-  .has-prefix input { padding-left: 28px; }
-  .has-suffix input { padding-right: 36px; }
 
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  /* Dual-input for staff */
+  .dual-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dual-field label { font-size: 11px; font-weight: 700; color: var(--gray-600); display: block; margin-bottom: 4px; }
+  .dual-field .ans-row input { width: 100%; }
 
-  /* ── Divider ── */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--gray-200);
-    margin: 14px 0;
+  /* ── Required Cards (no pills) ── */
+  .req-row {
+    display: flex; align-items: center; gap: 8px; margin-top: 6px; flex-wrap: wrap;
   }
-  .section-label {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .6px;
-    color: var(--gray-400);
-    margin-bottom: 10px;
+  .req-row .pfx { font-size: 14px; font-weight: 700; color: var(--gray-400); }
+  .req-row input[type="number"] {
+    width: 180px; padding: 8px 12px;
+    border: 2px solid var(--gray-200); border-radius: 6px;
+    font-size: 15px; font-weight: 700; color: var(--gray-800);
+    background: var(--gray-50);
+    -moz-appearance: textfield;
+  }
+  .req-row input[type="number"]::-webkit-inner-spin-button,
+  .req-row input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .req-row input[type="number"]:focus {
+    outline: none; border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(37,99,171,.12); background: white;
+  }
+  .req-row .sfx { font-size: 13px; font-weight: 600; color: var(--gray-400); }
+  .req-tag {
+    font-size: 10px; font-weight: 700;
+    background: #fee2e2; color: var(--red);
+    padding: 2px 8px; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: .4px;
   }
 
   /* ── Action Bar ── */
   .action-bar {
-    display: flex;
-    gap: 12px;
-    margin: 20px 0;
-    justify-content: center;
+    display: flex; gap: 12px; margin: 24px 0; justify-content: center;
   }
   button {
-    padding: 10px 28px;
-    border-radius: var(--radius);
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background .15s, transform .1s;
-    border: none;
+    padding: 11px 32px; border-radius: var(--radius);
+    font-size: 14px; font-weight: 700;
+    cursor: pointer; border: none;
+    transition: background .15s;
   }
-  .btn-primary {
-    background: var(--blue);
-    color: var(--white);
-    box-shadow: var(--shadow);
-  }
-  .btn-primary:hover { background: var(--blue-lt); }
-  .btn-secondary {
-    background: var(--gray-200);
-    color: var(--gray-600);
-  }
+  .btn-primary  { background: var(--blue);    color: var(--white); box-shadow: var(--shadow); }
+  .btn-primary:hover  { background: var(--blue-lt); }
+  .btn-secondary { background: var(--gray-200); color: var(--gray-600); }
   .btn-secondary:hover { background: var(--gray-100); }
 
   /* ── Results ── */
   .results-section { display: none; }
   .results-section.visible { display: block; }
 
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 680px) { .grid-2 { grid-template-columns: 1fr; } }
+
   .rowc-hero {
     background: linear-gradient(135deg, var(--blue) 0%, #1e3a5f 100%);
-    color: var(--white);
-    border-radius: var(--radius);
-    padding: 28px 32px;
-    margin-bottom: 20px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 24px;
-    align-items: center;
+    color: var(--white); border-radius: var(--radius);
+    padding: 28px 32px; margin-bottom: 20px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 24px; align-items: center;
     box-shadow: var(--shadow-lg);
   }
-  .rowc-hero .label { font-size: 13px; opacity: 0.75; margin-bottom: 4px; }
+  .rowc-hero .label { font-size: 13px; opacity: .75; margin-bottom: 4px; }
   .rowc-hero .value { font-size: 48px; font-weight: 900; line-height: 1; }
-  .rowc-hero .sub { font-size: 13px; opacity: 0.7; margin-top: 6px; }
+  .rowc-hero .sub   { font-size: 13px; opacity: .7; margin-top: 6px; }
   .verdict {
-    padding: 12px 24px;
-    border-radius: var(--radius);
-    font-size: 20px;
-    font-weight: 800;
-    text-align: center;
-    min-width: 160px;
+    padding: 12px 24px; border-radius: var(--radius);
+    font-size: 20px; font-weight: 800;
+    text-align: center; min-width: 160px;
+    color: #fff;
   }
   .verdict.pass { background: var(--green); }
   .verdict.fail { background: var(--red); }
-  .verdict span { display: block; font-size: 11px; font-weight: 500; opacity: 0.85; margin-top: 3px; }
+  .verdict span { display: block; font-size: 11px; font-weight: 500; opacity: .85; margin-top: 3px; }
+  .waterfall-bar {
+    height: 6px; border-radius: 3px; background: rgba(255,255,255,.2);
+    margin-top: 12px; overflow: hidden;
+  }
+  .waterfall-bar .fill { height: 100%; border-radius: 3px; transition: width .5s cubic-bezier(.4,0,.2,1); }
+  .waterfall-bar .fill.green { background: #4ade80; }
+  .waterfall-bar .fill.red   { background: #f87171; }
 
-  /* ── Result Tables ── */
+  .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .card-header {
+    background: var(--blue); color: var(--white);
+    padding: 10px 16px; font-weight: 700; font-size: 13px;
+  }
+  .card-body { padding: 16px; }
+
   .result-table { width: 100%; border-collapse: collapse; }
   .result-table tr { border-bottom: 1px solid var(--gray-100); }
   .result-table tr:last-child { border-bottom: none; }
-  .result-table td {
-    padding: 8px 10px;
-    font-size: 13px;
-  }
+  .result-table td { padding: 8px 10px; font-size: 13px; }
   .result-table td:first-child { color: var(--gray-600); }
   .result-table td:last-child {
-    text-align: right;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    font-family: "SF Mono", "Fira Mono", monospace;
-    font-size: 13px;
+    text-align: right; font-weight: 600;
+    font-family: "SF Mono","Fira Mono",monospace; font-size: 13px;
   }
   .result-table .subtotal td {
-    background: var(--gray-50);
-    font-weight: 700;
-    color: var(--gray-800);
-    border-top: 2px solid var(--gray-200);
+    background: var(--gray-50); font-weight: 700;
+    color: var(--gray-800); border-top: 2px solid var(--gray-200);
   }
-  .result-table .total td {
-    background: var(--blue);
-    color: var(--white);
-    font-weight: 800;
-    border-radius: 0;
-  }
+  .result-table .total td { background: var(--blue); color: var(--white); font-weight: 800; }
   .result-table .indent td:first-child { padding-left: 22px; color: var(--gray-400); font-size: 12px; }
-  .result-table .positive td:last-child { color: var(--green); }
-  .result-table .negative td:last-child { color: var(--red); }
-  .result-table .highlight td {
-    background: #eff6ff;
-    color: var(--blue);
-    font-weight: 700;
-  }
+  .result-table .highlight td { background: #eff6ff; color: var(--blue); font-weight: 700; }
 
-  /* waterfall bar */
-  .waterfall-bar {
-    height: 6px;
-    border-radius: 3px;
-    background: var(--gray-200);
-    margin-top: 12px;
-    overflow: hidden;
-    position: relative;
-  }
-  .waterfall-bar .fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width .5s cubic-bezier(.4,0,.2,1);
-  }
-  .waterfall-bar .fill.green { background: var(--green); }
-  .waterfall-bar .fill.red { background: var(--red); }
-
-  /* ── Footer ── */
   footer {
-    text-align: center;
-    color: var(--gray-400);
-    font-size: 11px;
-    margin-top: 40px;
-    padding-bottom: 20px;
+    text-align: center; color: var(--gray-400);
+    font-size: 11px; margin-top: 40px; padding-bottom: 20px;
   }
-
-  /* ── Print ── */
   @media print {
-    header .hurdle { border-color: #ccc; }
     .action-bar { display: none; }
     body { background: white; }
   }
@@ -321,446 +296,762 @@
 
 <div class="page">
 
-  <!-- ── INPUT SECTIONS ── -->
-  <div class="grid-2" style="margin-bottom:20px;">
+  <!-- Intro -->
+  <div class="intro-banner">
+    <h2>&#128203; Business Evaluation Questionnaire</h2>
+    <p>Answer each question below. For every factor, choose how it applies to this business:</p>
+    <div class="legend">
+      <span class="legend-item na">&#10006; N/A — Exclude (set to zero)</span>
+      <span class="legend-item std">&#9733; Standard — Use reference rate</span>
+      <span class="legend-item man">&#9998; Manual — Enter your own value</span>
+    </div>
+  </div>
 
-    <!-- Revenue -->
-    <div class="card">
-      <div class="card-header">
-        <span>&#9654;</span> Revenue
-        <span class="badge">Section 1</span>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <label>Net Sales (Annual) <span class="req">*</span></label>
-          <div class="input-wrap has-prefix has-suffix">
-            <span class="prefix">$</span>
-            <input type="number" id="netSales" placeholder="0" min="0" step="any" />
-            <span class="suffix">K</span>
-          </div>
-          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">Enter value in thousands (K). Net Sales = Resale = POS</div>
+  <!-- ═══════════════ SECTION A: BASICS ═══════════════ -->
+  <div class="q-section">
+    <div class="q-section-title">A &nbsp;&#8212;&nbsp; Business Basics &nbsp;(required)</div>
+
+    <!-- Q1: Net Sales -->
+    <div class="q-card req-card">
+      <div class="q-num">Q1</div>
+      <div class="q-body">
+        <div class="q-title">What is the expected annual <strong>Net Sales</strong>?</div>
+        <div class="q-desc">Also known as Resale or POS. Enter the full-year revenue estimate in thousands ($K).</div>
+        <div class="req-row">
+          <span class="pfx">$</span>
+          <input type="number" id="netSales" placeholder="e.g. 5000" min="0" step="any" />
+          <span class="sfx">K</span>
+          <span class="req-tag">Required</span>
         </div>
       </div>
     </div>
 
-    <!-- GP -->
-    <div class="card">
-      <div class="card-header">
-        <span>&#9654;</span> Gross Profit
-        <span class="badge">Section 2</span>
-      </div>
-      <div class="card-body">
-        <p class="section-label">Material Gross Profit</p>
-        <div class="field">
-          <label>MGP% (Material Gross Profit %) <span class="req">*</span></label>
-          <div class="input-wrap has-suffix">
-            <input type="number" id="mgpPct" placeholder="0.00" min="0" max="100" step="any" />
-            <span class="suffix">%</span>
-          </div>
-        </div>
-
-        <hr class="divider" />
-        <p class="section-label">GP Adjustments (deducted from MGP)</p>
-
-        <div class="field">
-          <label>Freight-In <span class="req">*</span></label>
-          <div class="input-wrap has-suffix">
-            <input type="number" id="freightIn" placeholder="0.00" min="0" max="100" step="any" />
-            <span class="suffix">%</span>
-          </div>
-          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales</div>
-        </div>
-
-        <div class="field">
-          <label>Customer Rebate <span class="req">*</span></label>
-          <div class="input-wrap has-suffix">
-            <input type="number" id="customerRebate" placeholder="0.00" min="0" max="100" step="any" />
-            <span class="suffix">%</span>
-          </div>
-          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales</div>
-        </div>
-
-        <div class="field">
-          <label>Other GP Adjustments <span class="req">*</span></label>
-          <div class="input-wrap has-suffix">
-            <input type="number" id="otherGPAdj" placeholder="0.00" min="0" max="100" step="any" />
-            <span class="suffix">%</span>
-          </div>
-          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales — IR, Profit-Sharing, Supplier Rebate, Import Duty, etc.</div>
-        </div>
-
-        <div class="field">
-          <label>Others</label>
-          <div class="input-wrap has-suffix">
-            <input type="number" id="othersGPAdj" placeholder="0.00" min="0" max="100" step="any" />
-            <span class="suffix">%</span>
-          </div>
-          <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales — any additional GP deductions</div>
+    <!-- Q2: MGP% -->
+    <div class="q-card req-card">
+      <div class="q-num">Q2</div>
+      <div class="q-body">
+        <div class="q-title">What is the <strong>Material Gross Profit % (MGP%)</strong>?</div>
+        <div class="q-desc">MGP% = (Net Sales − Material Cost) ÷ Net Sales. This represents your raw margin before any adjustments.</div>
+        <div class="req-row">
+          <input type="number" id="mgpPct" placeholder="e.g. 8.5" min="0" max="100" step="any" />
+          <span class="sfx">%</span>
+          <span class="req-tag">Required</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- OPEX Card (full width) -->
-  <div class="card" style="margin-bottom:20px;">
-    <div class="card-header">
-      <span>&#9654;</span> Operating Expenses (OPEX)
-      <span class="badge">Section 3</span>
+  <!-- ═══════════════ SECTION B: GP ADJUSTMENTS ═══════════════ -->
+  <div class="q-section">
+    <div class="q-section-title">B &nbsp;&#8212;&nbsp; GP Adjustments &nbsp;(deducted from MGP)</div>
+
+    <!-- Q3: Freight-In -->
+    <div class="q-card">
+      <div class="q-num">Q3</div>
+      <div class="q-body">
+        <div class="q-title">Does this business incur <strong>Freight-In</strong> costs?</div>
+        <div class="q-desc">Inbound shipping or handling fee charged by the supplier on top of product cost.</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="freightIn_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-std">
+            <input type="radio" name="freightIn_mode" value="standard" />
+            <span class="pill-btn">&#9733; Standard &nbsp;(0.20%)</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="freightIn_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="freightIn_ans_na"  class="q-answer ans-na show">This factor is excluded — Freight-In = 0.</div>
+        <div id="freightIn_ans_std" class="q-answer ans-std">&#9733; Using standard rate: <strong>0.20%</strong> of Net Sales</div>
+        <div id="freightIn_ans_man" class="q-answer ans-man">
+          <div class="ans-row">
+            <input type="number" id="freightIn_val" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="ans-unit">% of Net Sales</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <div class="grid-3">
 
-        <!-- Direct Staff -->
-        <div>
-          <p class="section-label">Direct Staff</p>
-          <div class="field">
-            <label>Front-end Headcount <span class="req">*</span></label>
-            <div class="input-wrap has-suffix">
-              <input type="number" id="feHeadcount" placeholder="0" min="0" step="1" />
-              <span class="suffix">pax</span>
-            </div>
+    <!-- Q4: Customer Rebate -->
+    <div class="q-card">
+      <div class="q-num">Q4</div>
+      <div class="q-body">
+        <div class="q-title">Is there a <strong>Customer Rebate</strong> arrangement?</div>
+        <div class="q-desc">Discount or rebate offered to the customer that reduces your effective revenue/margin.</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="customerRebate_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="customerRebate_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="customerRebate_ans_na"  class="q-answer ans-na show">This factor is excluded — Customer Rebate = 0.</div>
+        <div id="customerRebate_ans_man" class="q-answer ans-man">
+          <div class="ans-row">
+            <input type="number" id="customerRebate_val" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="ans-unit">% of Net Sales</span>
           </div>
-          <div class="field">
-            <label>Front-end Cost Rate <span class="req">*</span></label>
-            <div class="input-wrap has-prefix has-suffix">
-              <span class="prefix">$</span>
-              <input type="number" id="feRate" placeholder="0" min="0" step="any" />
-              <span class="suffix">K/head</span>
-            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Other GP Adjustments -->
+    <div class="q-card">
+      <div class="q-num">Q5</div>
+      <div class="q-body">
+        <div class="q-title">Are there <strong>Other GP Adjustments</strong>?</div>
+        <div class="q-desc">Includes: Inventory Reserve, Profit-Sharing, Supplier Rebate, Import Duty, etc.</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="otherGPAdj_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="otherGPAdj_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="otherGPAdj_ans_na"  class="q-answer ans-na show">This factor is excluded — Other GP Adj = 0.</div>
+        <div id="otherGPAdj_ans_man" class="q-answer ans-man">
+          <div class="ans-row">
+            <input type="number" id="otherGPAdj_val" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="ans-unit">% of Net Sales</span>
           </div>
-          <div class="field">
-            <label>Supporting Headcount <span class="req">*</span></label>
-            <div class="input-wrap has-suffix">
-              <input type="number" id="suppHeadcount" placeholder="0" min="0" step="1" />
-              <span class="suffix">pax</span>
-            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6: Others GP -->
+    <div class="q-card">
+      <div class="q-num">Q6</div>
+      <div class="q-body">
+        <div class="q-title">Are there any <strong>additional GP deductions</strong> (Others)?</div>
+        <div class="q-desc">Any other items that reduce gross profit not covered above.</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="othersGPAdj_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="othersGPAdj_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="othersGPAdj_ans_na"  class="q-answer ans-na show">This factor is excluded — Others GP = 0.</div>
+        <div id="othersGPAdj_ans_man" class="q-answer ans-man">
+          <div class="ans-row">
+            <input type="number" id="othersGPAdj_val" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="ans-unit">% of Net Sales</span>
           </div>
-          <div class="field">
-            <label>Supporting Cost Rate <span class="req">*</span></label>
-            <div class="input-wrap has-prefix has-suffix">
-              <span class="prefix">$</span>
-              <input type="number" id="suppRate" placeholder="0" min="0" step="any" />
-              <span class="suffix">K/head</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION C: STAFF COSTS ═══════════════ -->
+  <div class="q-section">
+    <div class="q-section-title">C &nbsp;&#8212;&nbsp; Direct Staff Costs &nbsp;(OPEX)</div>
+
+    <!-- Q7: Front-end Staff -->
+    <div class="q-card">
+      <div class="q-num">Q7</div>
+      <div class="q-body">
+        <div class="q-title">Are <strong>Front-end Staff</strong> required for this business?</div>
+        <div class="q-desc">Sales, business development, or customer-facing headcount directly supporting this business.</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="feStaff_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="feStaff_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="feStaff_ans_na"  class="q-answer ans-na show">No Front-end staff cost — excluded from OPEX.</div>
+        <div id="feStaff_ans_man" class="q-answer ans-man">
+          <div class="dual-row">
+            <div class="dual-field">
+              <label>Headcount Required</label>
+              <div class="ans-row">
+                <input type="number" id="feHC_val" placeholder="0" min="0" step="1" />
+                <span class="ans-unit">pax</span>
+              </div>
+            </div>
+            <div class="dual-field">
+              <label>Annual Cost Rate per Head</label>
+              <div class="ans-row">
+                <span style="font-size:13px;font-weight:700;color:var(--gray-400)">$</span>
+                <input type="number" id="feRate_val" placeholder="0" min="0" step="any" />
+                <span class="ans-unit">K / head</span>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Freight-Out & Others -->
-        <div>
-          <p class="section-label">Freight-Out</p>
-          <div class="field">
-            <label>Freight-Out % <span class="req">*</span></label>
-            <div class="input-wrap has-suffix">
-              <input type="number" id="freightOutPct" placeholder="0.00" min="0" max="100" step="any" />
-              <span class="suffix">%</span>
+    <!-- Q8: Supporting Staff -->
+    <div class="q-card">
+      <div class="q-num">Q8</div>
+      <div class="q-body">
+        <div class="q-title">Are <strong>Supporting Staff</strong> required for this business?</div>
+        <div class="q-desc">Operations, logistics, admin, or other back-office headcount supporting this business.</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="suppStaff_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="suppStaff_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="suppStaff_ans_na"  class="q-answer ans-na show">No Supporting staff cost — excluded from OPEX.</div>
+        <div id="suppStaff_ans_man" class="q-answer ans-man">
+          <div class="dual-row">
+            <div class="dual-field">
+              <label>Headcount Required</label>
+              <div class="ans-row">
+                <input type="number" id="suppHC_val" placeholder="0" min="0" step="1" />
+                <span class="ans-unit">pax</span>
+              </div>
             </div>
-            <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales</div>
-          </div>
-          <p class="section-label" style="margin-top:14px;">Others</p>
-          <div class="field">
-            <label>Others OPEX %</label>
-            <div class="input-wrap has-suffix">
-              <input type="number" id="othersOPEXPct" placeholder="0.00" min="0" max="100" step="any" />
-              <span class="suffix">%</span>
+            <div class="dual-field">
+              <label>Annual Cost Rate per Head</label>
+              <div class="ans-row">
+                <span style="font-size:13px;font-weight:700;color:var(--gray-400)">$</span>
+                <input type="number" id="suppRate_val" placeholder="0" min="0" step="any" />
+                <span class="ans-unit">K / head</span>
+              </div>
             </div>
-            <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">% of Net Sales — any additional operating expenses</div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <!-- Working Capital Cost -->
-        <div>
-          <p class="section-label">Working Capital Cost</p>
-          <div class="field">
-            <label>DSO — Customer Payment Term <span class="req">*</span></label>
-            <div class="input-wrap has-suffix">
-              <input type="number" id="dso" placeholder="0" min="0" step="1" />
-              <span class="suffix">days</span>
-            </div>
-          </div>
-          <div class="field">
-            <label>DIO — Inventory Buffer Period <span class="req">*</span></label>
-            <div class="input-wrap has-suffix">
-              <input type="number" id="dio" placeholder="0" min="0" step="1" />
-              <span class="suffix">days</span>
-            </div>
-          </div>
-          <div class="field">
-            <label>DPO — Payment Term to Supplier <span class="req">*</span></label>
-            <div class="input-wrap has-suffix">
-              <input type="number" id="dpo" placeholder="0" min="0" step="1" />
-              <span class="suffix">days</span>
-            </div>
-          </div>
-          <div class="field">
-            <label>Cost of Fund (p.a.) <span class="req">*</span></label>
-            <div class="input-wrap has-suffix">
-              <input type="number" id="costOfFund" placeholder="0.00" min="0" max="100" step="any" />
-              <span class="suffix">%</span>
-            </div>
-            <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">Reference: current borrowing interest rate</div>
+  <!-- ═══════════════ SECTION D: OTHER OPEX ═══════════════ -->
+  <div class="q-section">
+    <div class="q-section-title">D &nbsp;&#8212;&nbsp; Other Operating Expenses &nbsp;(OPEX)</div>
+
+    <!-- Q9: Freight-Out -->
+    <div class="q-card">
+      <div class="q-num">Q9</div>
+      <div class="q-body">
+        <div class="q-title">Does this business incur <strong>Freight-Out</strong> costs?</div>
+        <div class="q-desc">Outbound delivery or shipping cost to deliver products to the customer.</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="freightOut_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-std">
+            <input type="radio" name="freightOut_mode" value="standard" />
+            <span class="pill-btn">&#9733; Standard &nbsp;(0.35%)</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="freightOut_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="freightOut_ans_na"  class="q-answer ans-na show">This factor is excluded — Freight-Out = 0.</div>
+        <div id="freightOut_ans_std" class="q-answer ans-std">&#9733; Using standard rate: <strong>0.35%</strong> of Net Sales</div>
+        <div id="freightOut_ans_man" class="q-answer ans-man">
+          <div class="ans-row">
+            <input type="number" id="freightOut_val" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="ans-unit">% of Net Sales</span>
           </div>
         </div>
+      </div>
+    </div>
 
+    <!-- Q10: Others OPEX -->
+    <div class="q-card">
+      <div class="q-num">Q10</div>
+      <div class="q-body">
+        <div class="q-title">Are there <strong>Other Operating Expenses</strong>?</div>
+        <div class="q-desc">Any remaining OPEX items not covered above (e.g. IT allocation, office expenses, etc.).</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="othersOPEX_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-std">
+            <input type="radio" name="othersOPEX_mode" value="standard" />
+            <span class="pill-btn">&#9733; Standard &nbsp;(0.39%)</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="othersOPEX_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="othersOPEX_ans_na"  class="q-answer ans-na show">This factor is excluded — Others OPEX = 0.</div>
+        <div id="othersOPEX_ans_std" class="q-answer ans-std">&#9733; Using standard rate: <strong>0.39%</strong> of Net Sales</div>
+        <div id="othersOPEX_ans_man" class="q-answer ans-man">
+          <div class="ans-row">
+            <input type="number" id="othersOPEX_val" placeholder="0.00" min="0" max="100" step="any" />
+            <span class="ans-unit">% of Net Sales</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION E: WORKING CAPITAL ═══════════════ -->
+  <div class="q-section">
+    <div class="q-section-title">E &nbsp;&#8212;&nbsp; Working Capital Terms</div>
+
+    <!-- Q11: DSO — Customer Payment Term -->
+    <div class="q-card">
+      <div class="q-num">Q11</div>
+      <div class="q-body">
+        <div class="q-title">What is the <strong>Customer's Payment Term</strong>?</div>
+        <div class="q-desc">Number of days the customer takes to pay after invoice. DSO = Payment Term + 15 days (processing buffer).</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="custPayTerm_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-std">
+            <input type="radio" name="custPayTerm_mode" value="standard" />
+            <span class="pill-btn">&#9733; Standard &nbsp;(X = 110 days)</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="custPayTerm_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="custPayTerm_ans_na"  class="q-answer ans-na show">No receivables — DSO = 0 days.</div>
+        <div id="custPayTerm_ans_std" class="q-answer ans-std">&#9733; Standard: Customer's Payment Term = 110 days &rarr; DSO = 110 + 15 = <strong>125 days</strong></div>
+        <div id="custPayTerm_ans_man" class="q-answer ans-man">
+          <div class="ans-row">
+            <span style="font-size:12px;font-weight:600;color:var(--gray-600)">Customer's Payment Term =</span>
+            <input type="number" id="custPayTerm_val" placeholder="e.g. 60" min="0" step="1" oninput="updateDSODisplay()" />
+            <span class="ans-unit">days</span>
+          </div>
+          <div class="ans-derived" id="dso_derived">DSO = — + 15 = — days</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q12: DIO — Inventory Buffer -->
+    <div class="q-card">
+      <div class="q-num">Q12</div>
+      <div class="q-body">
+        <div class="q-title">What is the average <strong>Inventory Buffer Period</strong>?</div>
+        <div class="q-desc">The average number of days inventory is held before it is sold. DIO = Y days entered.</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="dio_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-std">
+            <input type="radio" name="dio_mode" value="standard" />
+            <span class="pill-btn">&#9733; Standard &nbsp;(Y = 60 days)</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="dio_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="dio_ans_na"  class="q-answer ans-na show">No inventory holding — DIO = 0 days.</div>
+        <div id="dio_ans_std" class="q-answer ans-std">&#9733; Standard: Inventory Buffer Period = <strong>60 days</strong> &rarr; DIO = 60 days</div>
+        <div id="dio_ans_man" class="q-answer ans-man">
+          <div class="ans-row">
+            <span style="font-size:12px;font-weight:600;color:var(--gray-600)">Inventory Buffer Period (Y) =</span>
+            <input type="number" id="dio_val" placeholder="e.g. 45" min="0" step="1" />
+            <span class="ans-unit">days &rarr; DIO = Y</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q13: DPO — Supplier Payment Term -->
+    <div class="q-card">
+      <div class="q-num">Q13</div>
+      <div class="q-body">
+        <div class="q-title">What is the <strong>Payment Term to the Supplier</strong>?</div>
+        <div class="q-desc">Number of days you take to pay your supplier. A longer DPO reduces Working Capital needs. DPO = Z days entered.</div>
+        <div class="pill-group">
+          <label class="pill-label pill-na">
+            <input type="radio" name="dpo_mode" value="na" checked />
+            <span class="pill-btn">&#10006; N/A</span>
+          </label>
+          <label class="pill-label pill-std">
+            <input type="radio" name="dpo_mode" value="standard" />
+            <span class="pill-btn">&#9733; Standard &nbsp;(Z = 45 days)</span>
+          </label>
+          <label class="pill-label pill-man">
+            <input type="radio" name="dpo_mode" value="manual" />
+            <span class="pill-btn">&#9998; Manual Input</span>
+          </label>
+        </div>
+        <div id="dpo_ans_na"  class="q-answer ans-na show">No payables offset — DPO = 0 days.</div>
+        <div id="dpo_ans_std" class="q-answer ans-std">&#9733; Standard: Payment Term = <strong>45 days</strong> &rarr; DPO = 45 days</div>
+        <div id="dpo_ans_man" class="q-answer ans-man">
+          <div class="ans-row">
+            <span style="font-size:12px;font-weight:600;color:var(--gray-600)">Payment Term (Z) =</span>
+            <input type="number" id="dpo_val" placeholder="e.g. 30" min="0" step="1" />
+            <span class="ans-unit">days &rarr; DPO = Z</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION F: COST OF FUND ═══════════════ -->
+  <div class="q-section">
+    <div class="q-section-title">F &nbsp;&#8212;&nbsp; Cost of Fund &nbsp;(required)</div>
+    <div class="q-card req-card">
+      <div class="q-num">Q14</div>
+      <div class="q-body">
+        <div class="q-title">What is the current <strong>Cost of Fund</strong> (borrowing interest rate p.a.)?</div>
+        <div class="q-desc">Reference: your company's current bank borrowing rate. Used to calculate Working Capital cost.</div>
+        <div class="req-row">
+          <input type="number" id="costOfFund" placeholder="e.g. 4.5" min="0" max="100" step="any" />
+          <span class="sfx">% p.a.</span>
+          <span class="req-tag">Required</span>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Action Bar -->
   <div class="action-bar">
-    <button class="btn-secondary" onclick="clearAll()">&#8635; Clear All</button>
-    <button class="btn-primary" onclick="calculate()">&#9654; Calculate ROWC</button>
+    <button class="btn-secondary" onclick="clearAll()">&#8635;&nbsp; Reset Questionnaire</button>
+    <button class="btn-primary"   onclick="calculate()">&#9654;&nbsp; Calculate ROWC</button>
   </div>
 
-  <!-- ── RESULTS ── -->
+  <!-- ═══════════════ RESULTS ═══════════════ -->
   <div class="results-section" id="results">
 
-    <!-- ROWC Hero -->
-    <div class="rowc-hero" id="rowcHero">
+    <div class="rowc-hero">
       <div>
         <div class="label">Return on Working Capital (ROWC)</div>
         <div class="value" id="rowcValue">—</div>
-        <div class="sub" id="rowcSub">—</div>
+        <div class="sub"   id="rowcSub">—</div>
         <div class="waterfall-bar"><div class="fill" id="rowcBar" style="width:0%"></div></div>
       </div>
-      <div class="verdict" id="rowcVerdict">
-        —
+      <div class="verdict" id="rowcVerdict">—
         <span id="verdictSub">vs 12% hurdle</span>
       </div>
     </div>
 
     <div class="grid-2">
 
-      <!-- GP Waterfall -->
       <div class="card">
         <div class="card-header">&#9654; GP Waterfall ($K)</div>
         <div class="card-body">
-          <table class="result-table">
-            <tbody>
-              <tr><td>Net Sales</td><td id="r_netSales">—</td></tr>
-              <tr><td>MGP% Applied</td><td id="r_mgpPct">—</td></tr>
-              <tr class="subtotal"><td>MGP</td><td id="r_mgp">—</td></tr>
-              <tr class="indent"><td>(-) Freight-In</td><td id="r_freightIn">—</td></tr>
-              <tr class="indent"><td>(-) Customer Rebate</td><td id="r_customerRebate">—</td></tr>
-              <tr class="indent"><td>(-) Other GP Adj.</td><td id="r_otherGPAdj">—</td></tr>
-              <tr class="indent"><td>(-) Others</td><td id="r_othersGPAdj">—</td></tr>
-              <tr class="subtotal"><td>NGP</td><td id="r_ngp">—</td></tr>
-              <tr><td>NGP%</td><td id="r_ngpPct">—</td></tr>
-            </tbody>
-          </table>
+          <table class="result-table"><tbody>
+            <tr><td>Net Sales</td><td id="r_netSales">—</td></tr>
+            <tr><td>MGP% Applied</td><td id="r_mgpPct">—</td></tr>
+            <tr class="subtotal"><td>MGP</td><td id="r_mgp">—</td></tr>
+            <tr class="indent"><td>(-) Freight-In</td><td id="r_freightIn">—</td></tr>
+            <tr class="indent"><td>(-) Customer Rebate</td><td id="r_customerRebate">—</td></tr>
+            <tr class="indent"><td>(-) Other GP Adj.</td><td id="r_otherGPAdj">—</td></tr>
+            <tr class="indent"><td>(-) Others (GP)</td><td id="r_othersGPAdj">—</td></tr>
+            <tr class="subtotal"><td>NGP</td><td id="r_ngp">—</td></tr>
+            <tr><td>NGP%</td><td id="r_ngpPct">—</td></tr>
+          </tbody></table>
         </div>
       </div>
 
-      <!-- OPEX Breakdown -->
       <div class="card">
         <div class="card-header">&#9654; OPEX Breakdown ($K)</div>
         <div class="card-body">
-          <table class="result-table">
-            <tbody>
-              <tr class="indent"><td>Front-end Staff (HC × Rate)</td><td id="r_feCost">—</td></tr>
-              <tr class="indent"><td>Supporting Staff (HC × Rate)</td><td id="r_suppCost">—</td></tr>
-              <tr class="subtotal"><td>Direct Staff Total</td><td id="r_staffTotal">—</td></tr>
-              <tr class="indent"><td>Freight-Out</td><td id="r_freightOut">—</td></tr>
-              <tr class="indent"><td>Others</td><td id="r_othersOPEX">—</td></tr>
-              <tr class="indent"><td>Working Capital Cost</td><td id="r_wcCost">—</td></tr>
-              <tr><td>Avg. WC Days (DSO+DIO−DPO)</td><td id="r_avgWCDays">—</td></tr>
-              <tr><td>WC Cost%</td><td id="r_wcCostPct">—</td></tr>
-              <tr class="subtotal"><td>Total OPEX</td><td id="r_totalOPEX">—</td></tr>
-            </tbody>
-          </table>
+          <table class="result-table"><tbody>
+            <tr class="indent"><td>Front-end Staff (HC × Rate)</td><td id="r_feCost">—</td></tr>
+            <tr class="indent"><td>Supporting Staff (HC × Rate)</td><td id="r_suppCost">—</td></tr>
+            <tr class="subtotal"><td>Direct Staff Total</td><td id="r_staffTotal">—</td></tr>
+            <tr class="indent"><td>Freight-Out</td><td id="r_freightOut">—</td></tr>
+            <tr class="indent"><td>Others OPEX</td><td id="r_othersOPEX">—</td></tr>
+            <tr class="indent"><td>Working Capital Cost</td><td id="r_wcCost">—</td></tr>
+            <tr><td>DSO / DIO / DPO</td><td id="r_wcDays">—</td></tr>
+            <tr><td>Avg. WC Days (DSO+DIO−DPO)</td><td id="r_avgWCDays">—</td></tr>
+            <tr><td>WC Cost%</td><td id="r_wcCostPct">—</td></tr>
+            <tr class="subtotal"><td>Total OPEX</td><td id="r_totalOPEX">—</td></tr>
+          </tbody></table>
         </div>
       </div>
 
-      <!-- Contribution Margin -->
       <div class="card">
         <div class="card-header">&#9654; Contribution Margin ($K)</div>
         <div class="card-body">
-          <table class="result-table">
-            <tbody>
-              <tr><td>NGP</td><td id="r_ngp2">—</td></tr>
-              <tr><td>(-) Total OPEX</td><td id="r_totalOPEX2">—</td></tr>
-              <tr class="highlight"><td>CM (Contribution Margin)</td><td id="r_cm">—</td></tr>
-              <tr><td>CM%</td><td id="r_cmPct">—</td></tr>
-            </tbody>
-          </table>
+          <table class="result-table"><tbody>
+            <tr><td>NGP</td><td id="r_ngp2">—</td></tr>
+            <tr><td>(-) Total OPEX</td><td id="r_totalOPEX2">—</td></tr>
+            <tr class="highlight"><td>CM (Contribution Margin)</td><td id="r_cm">—</td></tr>
+            <tr><td>CM%</td><td id="r_cmPct">—</td></tr>
+          </tbody></table>
         </div>
       </div>
 
-      <!-- Working Capital -->
       <div class="card">
         <div class="card-header">&#9654; Working Capital ($K)</div>
         <div class="card-body">
-          <table class="result-table">
-            <tbody>
-              <tr><td>AR (Net Sales × DSO / 365)</td><td id="r_ar">—</td></tr>
-              <tr><td>INV (Net Sales × DIO / 365)</td><td id="r_inv">—</td></tr>
-              <tr><td>(-) AP (Net Sales × DPO / 365)</td><td id="r_ap">—</td></tr>
-              <tr class="subtotal"><td>Working Capital (AR+INV−AP)</td><td id="r_wc">—</td></tr>
-              <tr><td>WC Turns</td><td id="r_wcTurns">—</td></tr>
-              <tr class="total"><td>ROWC = CM ÷ WC</td><td id="r_rowc">—</td></tr>
-            </tbody>
-          </table>
+          <table class="result-table"><tbody>
+            <tr><td>AR (Net Sales × DSO / 365)</td><td id="r_ar">—</td></tr>
+            <tr><td>INV (Net Sales × DIO / 365)</td><td id="r_inv">—</td></tr>
+            <tr><td>(-) AP (Net Sales × DPO / 365)</td><td id="r_ap">—</td></tr>
+            <tr class="subtotal"><td>Working Capital (AR+INV−AP)</td><td id="r_wc">—</td></tr>
+            <tr><td>WC Turns</td><td id="r_wcTurns">—</td></tr>
+            <tr class="total"><td>ROWC = CM ÷ WC</td><td id="r_rowc">—</td></tr>
+          </tbody></table>
         </div>
       </div>
 
     </div>
-  </div>
+  </div><!-- /results -->
 
-</div>
+</div><!-- /page -->
 
 <footer>
   AVT Business Evaluation Tool &nbsp;|&nbsp; ROWC Hurdle Rate: 12% &nbsp;|&nbsp; All monetary values in $K
+  &nbsp;|&nbsp; Reference parameters: see <em>parameters.md</em>
 </footer>
 
 <script>
-  function val(id) {
-    const v = parseFloat(document.getElementById(id).value);
-    return isNaN(v) ? 0 : v;
-  }
+// ═══════════════════════════════════════════════════════════════════
+//  STANDARD REFERENCE PARAMETERS
+//  Keep these values in sync with parameters.md
+// ═══════════════════════════════════════════════════════════════════
+const PARAMS = {
+  freightInPct:        0.20,   // % of Net Sales
+  freightOutPct:       0.35,   // % of Net Sales
+  othersOPEXPct:       0.39,   // % of Net Sales
+  customerPaymentTerm: 110,    // X days  →  DSO = X + dsoDelta
+  dsoDelta:            15,     // processing buffer added to customer payment term
+  inventoryBufferDays: 60,     // Y days  →  DIO = Y
+  supplierPaymentTerm: 45,     // Z days  →  DPO = Z
+};
 
-  function fmt(n, decimals = 1) {
-    // Format as $K with commas
-    return n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
-  }
+// ── Helpers ──────────────────────────────────────────────────────
+function getMode(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : 'na';
+}
+function getNum(id) {
+  const v = parseFloat(document.getElementById(id)?.value);
+  return isNaN(v) ? 0 : v;
+}
+// Returns decimal fraction (e.g. 0.002 for 0.2%)
+function resolvePct(fieldName, standardPct) {
+  const mode = getMode(fieldName + '_mode');
+  if (mode === 'na')       return 0;
+  if (mode === 'standard') return standardPct / 100;
+  return getNum(fieldName + '_val') / 100;
+}
+// Returns days integer
+function resolveDays(fieldName, standardDays) {
+  const mode = getMode(fieldName + '_mode');
+  if (mode === 'na')       return 0;
+  if (mode === 'standard') return standardDays;
+  return getNum(fieldName + '_val');
+}
+function fmt(n, d = 1) {
+  return n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+function pct(n, d = 2) { return n.toFixed(d) + '%'; }
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
 
-  function pct(n, decimals = 2) {
-    return n.toFixed(decimals) + '%';
-  }
+// ── Dynamic DSO display ──────────────────────────────────────────
+function updateDSODisplay() {
+  const x   = getNum('custPayTerm_val');
+  const dso = x + PARAMS.dsoDelta;
+  setText('dso_derived', `DSO = ${x} + ${PARAMS.dsoDelta} = ${dso} days`);
+}
 
-  function set(id, text, cls) {
-    const el = document.getElementById(id);
-    el.textContent = text;
-    if (cls) el.className = cls;
-  }
+// ── Calculate ────────────────────────────────────────────────────
+function calculate() {
+  const netSales = getNum('netSales');
+  const mgpPct   = getNum('mgpPct') / 100;
 
-  function calculate() {
-    // ── Inputs ──
-    const netSales           = val('netSales');
-    const mgpPct             = val('mgpPct') / 100;
-    const freightInPct       = val('freightIn') / 100;
-    const customerRebatePct  = val('customerRebate') / 100;
-    const otherGPAdjPct      = val('otherGPAdj') / 100;
-    const othersGPAdjPct     = val('othersGPAdj') / 100;
-    const feHC           = val('feHeadcount');
-    const feRate         = val('feRate');
-    const suppHC         = val('suppHeadcount');
-    const suppRate       = val('suppRate');
-    const freightOutPct  = val('freightOutPct') / 100;
-    const othersOPEXPct  = val('othersOPEXPct') / 100;
-    const dso            = val('dso');
-    const dio            = val('dio');
-    const dpo            = val('dpo');
-    const costOfFund     = val('costOfFund') / 100;
+  if (netSales === 0) { alert('Please enter Net Sales (Q1) to proceed.'); return; }
+  if (mgpPct   === 0) { alert('Please enter MGP% (Q2) to proceed.'); return; }
 
-    if (netSales === 0) {
-      alert('Please enter Net Sales to proceed.');
-      return;
-    }
+  // ── GP Adjustments ──
+  const freightInPct       = resolvePct('freightIn',       PARAMS.freightInPct);
+  const customerRebatePct  = resolvePct('customerRebate',  0);
+  const otherGPAdjPct      = resolvePct('otherGPAdj',      0);
+  const othersGPAdjPct     = resolvePct('othersGPAdj',     0);
 
-    // ── GP Waterfall ──
-    const mgp          = netSales * mgpPct;
-    const freightIn    = netSales * freightInPct;
-    const customerRebate = netSales * customerRebatePct;
-    const otherGPAdj   = netSales * otherGPAdjPct;
-    const othersGPAdj  = netSales * othersGPAdjPct;
-    const ngp    = mgp - freightIn - customerRebate - otherGPAdj - othersGPAdj;
-    const ngpPct = netSales > 0 ? ngp / netSales : 0;
+  const mgp          = netSales * mgpPct;
+  const freightIn    = netSales * freightInPct;
+  const customerRebate = netSales * customerRebatePct;
+  const otherGPAdj   = netSales * otherGPAdjPct;
+  const othersGPAdj  = netSales * othersGPAdjPct;
+  const ngp          = mgp - freightIn - customerRebate - otherGPAdj - othersGPAdj;
+  const ngpPct       = ngp / netSales;
 
-    // ── OPEX ──
-    const feCost     = feHC * feRate;
-    const suppCost   = suppHC * suppRate;
-    const staffTotal = feCost + suppCost;
-    const freightOut = netSales * freightOutPct;
-    const othersOPEX = netSales * othersOPEXPct;
-    const avgWCDays  = dso + dio - dpo;
-    const wcCostPct  = avgWCDays / 365 * costOfFund;
-    const wcCost     = netSales * wcCostPct;
-    const totalOPEX  = staffTotal + freightOut + othersOPEX + wcCost;
+  // ── Staff ──
+  const feMode   = getMode('feStaff_mode');
+  const suppMode = getMode('suppStaff_mode');
+  const feHC     = feMode   === 'manual' ? getNum('feHC_val')   : 0;
+  const feRate   = feMode   === 'manual' ? getNum('feRate_val') : 0;
+  const suppHC   = suppMode === 'manual' ? getNum('suppHC_val')   : 0;
+  const suppRate = suppMode === 'manual' ? getNum('suppRate_val') : 0;
+  const feCost     = feHC   * feRate;
+  const suppCost   = suppHC * suppRate;
+  const staffTotal = feCost + suppCost;
 
-    // ── CM ──
-    const cm    = ngp - totalOPEX;
-    const cmPct = netSales > 0 ? cm / netSales : 0;
+  // ── Other OPEX ──
+  const freightOutPct = resolvePct('freightOut',  PARAMS.freightOutPct);
+  const othersOPEXPct = resolvePct('othersOPEX',  PARAMS.othersOPEXPct);
+  const freightOut    = netSales * freightOutPct;
+  const othersOPEX    = netSales * othersOPEXPct;
 
-    // ── Working Capital ──
-    const ar      = netSales * dso / 365;
-    const inv     = netSales * dio / 365;
-    const ap      = netSales * dpo / 365;
-    const wc      = ar + inv - ap;
-    const wcTurns = wc > 0 ? netSales / wc : 0;
-    const rowc    = wc > 0 ? cm / wc : 0;
+  // ── WC Days ──
+  const custPayTerm = resolveDays('custPayTerm', PARAMS.customerPaymentTerm);
+  const dso = custPayTerm > 0 ? custPayTerm + PARAMS.dsoDelta : 0;
+  const dio = resolveDays('dio', PARAMS.inventoryBufferDays);
+  const dpo = resolveDays('dpo', PARAMS.supplierPaymentTerm);
 
-    // ── Populate Results ──
-    set('r_netSales', fmt(netSales));
-    set('r_mgpPct', pct(mgpPct * 100));
-    set('r_mgp', fmt(mgp));
-    set('r_freightIn', '(' + fmt(freightIn) + ')  ' + pct(freightInPct * 100));
-    set('r_customerRebate', '(' + fmt(customerRebate) + ')  ' + pct(customerRebatePct * 100));
-    set('r_otherGPAdj', '(' + fmt(otherGPAdj) + ')  ' + pct(otherGPAdjPct * 100));
-    set('r_othersGPAdj', '(' + fmt(othersGPAdj) + ')  ' + pct(othersGPAdjPct * 100));
-    set('r_ngp', fmt(ngp));
-    set('r_ngpPct', pct(ngpPct * 100));
+  // ── WC Cost ──
+  const costOfFund = getNum('costOfFund') / 100;
+  const avgWCDays  = dso + dio - dpo;
+  const wcCostPct  = (avgWCDays / 365) * costOfFund;
+  const wcCost     = netSales * wcCostPct;
 
-    set('r_feCost', fmt(feCost));
-    set('r_suppCost', fmt(suppCost));
-    set('r_staffTotal', fmt(staffTotal));
-    set('r_freightOut', fmt(freightOut));
-    set('r_othersOPEX', fmt(othersOPEX) + '  ' + pct(othersOPEXPct * 100));
-    set('r_wcCost', fmt(wcCost));
-    set('r_avgWCDays', avgWCDays.toFixed(0) + ' days');
-    set('r_wcCostPct', pct(wcCostPct * 100));
-    set('r_totalOPEX', fmt(totalOPEX));
+  // ── Totals ──
+  const totalOPEX = staffTotal + freightOut + othersOPEX + wcCost;
+  const cm        = ngp - totalOPEX;
+  const cmPct     = cm / netSales;
 
-    set('r_ngp2', fmt(ngp));
-    set('r_totalOPEX2', '(' + fmt(totalOPEX) + ')');
-    set('r_cm', fmt(cm));
-    set('r_cmPct', pct(cmPct * 100));
+  // ── Working Capital ──
+  const ar      = netSales * dso / 365;
+  const inv     = netSales * dio / 365;
+  const ap      = netSales * dpo / 365;
+  const wc      = ar + inv - ap;
+  const wcTurns = wc > 0 ? netSales / wc : 0;
+  const rowc    = wc > 0 ? cm / wc : 0;
 
-    set('r_ar', fmt(ar));
-    set('r_inv', fmt(inv));
-    set('r_ap', fmt(ap));
-    set('r_wc', fmt(wc));
-    set('r_wcTurns', wcTurns.toFixed(2) + 'x');
-    set('r_rowc', pct(rowc * 100));
+  // ── Populate Results ──
+  setText('r_netSales',      fmt(netSales));
+  setText('r_mgpPct',        pct(mgpPct * 100));
+  setText('r_mgp',           fmt(mgp));
+  setText('r_freightIn',     freightInPct > 0
+    ? '(' + fmt(freightIn) + ')  ' + pct(freightInPct * 100) : '—');
+  setText('r_customerRebate', customerRebatePct > 0
+    ? '(' + fmt(customerRebate) + ')  ' + pct(customerRebatePct * 100) : '—');
+  setText('r_otherGPAdj',    otherGPAdjPct > 0
+    ? '(' + fmt(otherGPAdj) + ')  ' + pct(otherGPAdjPct * 100) : '—');
+  setText('r_othersGPAdj',   othersGPAdjPct > 0
+    ? '(' + fmt(othersGPAdj) + ')  ' + pct(othersGPAdjPct * 100) : '—');
+  setText('r_ngp',           fmt(ngp));
+  setText('r_ngpPct',        pct(ngpPct * 100));
 
-    // ── ROWC Hero ──
-    const rowcPct = rowc * 100;
-    const pass    = rowcPct >= 12;
+  setText('r_feCost',        feCost   > 0 ? fmt(feCost)   : '—');
+  setText('r_suppCost',      suppCost > 0 ? fmt(suppCost) : '—');
+  setText('r_staffTotal',    fmt(staffTotal));
+  setText('r_freightOut',    freightOutPct > 0
+    ? fmt(freightOut) + '  ' + pct(freightOutPct * 100) : '—');
+  setText('r_othersOPEX',    othersOPEXPct > 0
+    ? fmt(othersOPEX) + '  ' + pct(othersOPEXPct * 100) : '—');
+  setText('r_wcCost',        fmt(wcCost));
+  setText('r_wcDays',        `DSO ${dso}d / DIO ${dio}d / DPO ${dpo}d`);
+  setText('r_avgWCDays',     avgWCDays.toFixed(0) + ' days');
+  setText('r_wcCostPct',     pct(wcCostPct * 100));
+  setText('r_totalOPEX',     fmt(totalOPEX));
 
-    document.getElementById('rowcValue').textContent = pct(rowcPct, 1);
-    document.getElementById('rowcSub').textContent =
-      'CM: $' + fmt(cm) + 'K  |  WC: $' + fmt(wc) + 'K  |  WC Turns: ' + wcTurns.toFixed(2) + 'x';
+  setText('r_ngp2',          fmt(ngp));
+  setText('r_totalOPEX2',    '(' + fmt(totalOPEX) + ')');
+  setText('r_cm',            fmt(cm));
+  setText('r_cmPct',         pct(cmPct * 100));
 
-    const bar = document.getElementById('rowcBar');
-    const barWidth = Math.min(Math.max(rowcPct / 30 * 100, 0), 100);
-    bar.style.width = barWidth + '%';
-    bar.className = 'fill ' + (pass ? 'green' : 'red');
+  setText('r_ar',      fmt(ar));
+  setText('r_inv',     fmt(inv));
+  setText('r_ap',      fmt(ap));
+  setText('r_wc',      fmt(wc));
+  setText('r_wcTurns', wcTurns.toFixed(2) + 'x');
+  setText('r_rowc',    pct(rowc * 100));
 
-    const verdict = document.getElementById('rowcVerdict');
-    verdict.textContent = pass ? '✓ PASS' : '✗ FAIL';
-    verdict.className = 'verdict ' + (pass ? 'pass' : 'fail');
+  // ── ROWC Hero ──
+  const rowcPct = rowc * 100;
+  const pass    = rowcPct >= 12;
 
-    const verdictSub = document.createElement('span');
-    verdictSub.textContent = pass
-      ? '+' + (rowcPct - 12).toFixed(1) + '% above hurdle'
-      : (rowcPct - 12).toFixed(1) + '% below hurdle';
-    verdict.appendChild(verdictSub);
+  document.getElementById('rowcValue').textContent = pct(rowcPct, 1);
+  document.getElementById('rowcSub').textContent   =
+    'CM: $' + fmt(cm) + 'K  |  WC: $' + fmt(wc) + 'K  |  WC Turns: ' + wcTurns.toFixed(2) + 'x';
 
-    // Show results
-    const resultsEl = document.getElementById('results');
-    resultsEl.classList.add('visible');
-    setTimeout(() => {
-      resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  }
+  const bar = document.getElementById('rowcBar');
+  bar.style.width = Math.min(Math.max(rowcPct / 30 * 100, 0), 100) + '%';
+  bar.className   = 'fill ' + (pass ? 'green' : 'red');
 
-  function clearAll() {
-    document.querySelectorAll('input[type="number"]').forEach(el => el.value = '');
-    document.getElementById('results').classList.remove('visible');
-  }
+  const verdict = document.getElementById('rowcVerdict');
+  verdict.innerHTML = (pass ? '&#10003; PASS' : '&#10007; FAIL') +
+    `<span>${pass ? '+' : ''}${(rowcPct - 12).toFixed(1)}% ${pass ? 'above' : 'below'} hurdle</span>`;
+  verdict.className = 'verdict ' + (pass ? 'pass' : 'fail');
 
-  // Allow Enter key to trigger calculation
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Enter') calculate();
+  const resultsEl = document.getElementById('results');
+  resultsEl.classList.add('visible');
+  setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+// ── Pill Toggle Logic ────────────────────────────────────────────
+function setupQuestion(fieldName, answerTypes) {
+  // answerTypes: array of answer div suffixes, e.g. ['na','std','man']
+  const radios = document.querySelectorAll(`input[name="${fieldName}_mode"]`);
+  radios.forEach(radio => {
+    radio.addEventListener('change', () => refreshAnswerArea(fieldName, answerTypes));
   });
+  refreshAnswerArea(fieldName, answerTypes); // init state
+}
+
+function refreshAnswerArea(fieldName, answerTypes) {
+  const mode = getMode(fieldName + '_mode');
+  const modeMap = { na: 'na', standard: 'std', manual: 'man' };
+  const activeKey = modeMap[mode] || 'na';
+  answerTypes.forEach(type => {
+    const el = document.getElementById(`${fieldName}_ans_${type}`);
+    if (el) {
+      el.classList.toggle('show', type === activeKey);
+    }
+  });
+}
+
+// ── Reset ────────────────────────────────────────────────────────
+function clearAll() {
+  document.querySelectorAll('input[type="number"]').forEach(el => el.value = '');
+  // Reset all radios to first option (na)
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    if (radio.value === 'na') radio.checked = true;
+  });
+  // Re-init all answer areas
+  initAllQuestions();
+  // Hide results
+  document.getElementById('results').classList.remove('visible');
+  // Reset DSO display
+  setText('dso_derived', 'DSO = — + 15 = — days');
+}
+
+// ── Init ─────────────────────────────────────────────────────────
+function initAllQuestions() {
+  setupQuestion('freightIn',      ['na', 'std', 'man']);
+  setupQuestion('customerRebate', ['na', 'man']);
+  setupQuestion('otherGPAdj',     ['na', 'man']);
+  setupQuestion('othersGPAdj',    ['na', 'man']);
+  setupQuestion('feStaff',        ['na', 'man']);
+  setupQuestion('suppStaff',      ['na', 'man']);
+  setupQuestion('freightOut',     ['na', 'std', 'man']);
+  setupQuestion('othersOPEX',     ['na', 'std', 'man']);
+  setupQuestion('custPayTerm',    ['na', 'std', 'man']);
+  setupQuestion('dio',            ['na', 'std', 'man']);
+  setupQuestion('dpo',            ['na', 'std', 'man']);
+}
+
+document.addEventListener('DOMContentLoaded', initAllQuestions);
+document.addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
 </script>
 
 </body>
